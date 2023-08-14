@@ -1,0 +1,60 @@
+﻿@model Students_Details.Models.Studentmodels
+
+@{
+    ViewData["Title"] = "Insert";
+}
+
+<h1>Insert</h1>
+
+<h4>Studentmodels</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Firstname" class="control-label"></label>
+                <input asp-for="Firstname" class="form-control" />
+                <span asp-validation-for="Firstname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lastname" class="control-label"></label>
+                <input asp-for="Lastname" class="form-control" />
+                <span asp-validation-for="Lastname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mailid" class="control-label"></label>
+                <input asp-for="Mailid" class="form-control" />
+                <span asp-validation-for="Mailid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mobilenumber" class="control-label"></label>
+                <input asp-for="Mobilenumber" class="form-control" />
+                <span asp-validation-for="Mobilenumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="classname" class="control-label"></label>
+                <input asp-for="classname" class="form-control" />
+                <span asp-validation-for="classname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fathername" class="control-label"></label>
+                <input asp-for="Fathername" class="form-control" />
+                <span asp-validation-for="Fathername" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mothername" class="control-label"></label>
+                <input asp-for="Mothername" class="form-control" />
+                <span asp-validation-for="Mothername" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List">Back to List</a>
+</div>
+

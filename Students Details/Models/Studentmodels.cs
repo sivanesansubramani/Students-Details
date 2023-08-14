@@ -7,6 +7,8 @@ namespace Students_Details.Models
 {
     public class Studentmodels  
     {
+
+        public int Studid { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public  string Mailid { get; set; }
