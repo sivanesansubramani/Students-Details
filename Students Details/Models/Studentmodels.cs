@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Students_Details.Models
 {
-    public class Studentmodels
+    public class Studentmodels  
     {
         public string Firstname { get; set; }
         public string Lastname { get; set; }
