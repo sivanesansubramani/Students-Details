@@ -50,7 +50,7 @@ namespace Students_Details
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=StudentDetails}/{action=InsertRecord}/{id?}");
+                    pattern: "{controller=home}/{action=CreateQRCode}/{id?}");
             });
         }
     }

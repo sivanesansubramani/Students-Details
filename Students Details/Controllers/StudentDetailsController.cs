@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Students_Details.Models;
 using Students_Details.Repository;
 
@@ -12,6 +9,7 @@ namespace Students_Details.Controllers
     public class StudentDetailsController : Controller
     {
         // GET: StudentDetailsController
+
 
 
         StudentDetailsRepo ObjRepository;
@@ -26,10 +24,11 @@ namespace Students_Details.Controllers
             return View("List", ObjRepository.Select());
         }
 
-        // GET: StudentDetailsController/Details/5
+        // GET: Registration/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var res = ObjRepository.SelectSP(id);
+            return View("QR", res);
         }
 
         // GET: PersonalDataController/Create
@@ -55,20 +54,23 @@ namespace Students_Details.Controllers
         }
 
 
-        // GET: StudentDetailsController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: PersonalDataController/Edit/5
+        public ActionResult Edit(int Studid)
         {
-            return View();
+            var res = ObjRepository.SelectSP(Studid);
+            return View("Ubdate", res);
         }
 
-        // POST: StudentDetailsController/Edit/5
+        // POST: PersonalDataController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int Studid, Studentmodels Reg)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                Reg.Studid = Studid;
+                ObjRepository.ubdate(Reg);
+                return RedirectToAction(nameof(List));
             }
             catch
             {
@@ -76,20 +78,23 @@ namespace Students_Details.Controllers
             }
         }
 
-        // GET: StudentDetailsController/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Registration/Delete/5
+        [HttpGet]
+        public ActionResult Delete(int Studid)
         {
-            return View();
+            var res = ObjRepository.SelectSP(Studid);
+            return View("Delete", res);
         }
 
-        // POST: StudentDetailsController/Delete/5
+        // POST: Registration/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Remove(int Studid)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                ObjRepository.delete(Studid);
+                return RedirectToAction(nameof(List));
             }
             catch
             {

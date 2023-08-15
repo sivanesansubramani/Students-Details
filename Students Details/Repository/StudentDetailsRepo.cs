@@ -112,7 +112,7 @@ namespace Students_Details.Repository
 
                 connectionObject.Open(); // Age = @Age, Address = @Address where id = @id
 
-                connectionObject.Execute($"  exec UbdatePersonalBio '{bio.Firstname}', '{bio.Mailid}',{bio.Mobilenumber},'{bio.classname}','{bio.Fathername}','{bio.Mothername}',{bio.Studid} ");
+                connectionObject.Execute($"  Exec Updatedetails {bio.Studid},'{bio.Firstname}', '{bio.Mailid}',{bio.Mobilenumber},'{bio.classname}','{bio.Fathername}','{bio.Mothername}'");
 
 
                 connectionObject.Close();
@@ -128,7 +128,7 @@ namespace Students_Details.Repository
 
         }
 
-        public void delete(int Id)
+        public void delete(int Studid)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace Students_Details.Repository
                  int del = Convert.ToInt32(Console.ReadLine());
  */
                 connectionObject.Open();
-                connectionObject.Execute($"exec DeletePersonalBio {Id} ");
+                connectionObject.Execute($"Exec Deletedetails {Studid} ");
 
 
                 connectionObject.Close();
@@ -156,14 +156,14 @@ namespace Students_Details.Repository
 
 
 
-        public Studentmodels SelectSP(int id)
+        public Studentmodels SelectSP(int Studid)
         {
             try
             {
 
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
-                var res = connection.QueryFirst<Studentmodels>($"exec selects {id}");
+                var res = connection.QueryFirst<Studentmodels>($"exec selectwithID {Studid}");
                 connection.Close();
 
                 return res;

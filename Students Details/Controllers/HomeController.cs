@@ -1,37 +1,70 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Students_Details.Models;
+﻿using GenerateQRCode_Demo.Models;
+using IronBarCode;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Drawing;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using Students_Details.Models;
+using Students_Details.Repository;
 
-namespace Students_Details.Controllers
+namespace GenerateQRCode_Demo.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        StudentDetailsRepo ObjRepository;
+
+        public HomeController()
         {
-            _logger = logger;
+            ObjRepository = new StudentDetailsRepo();
         }
 
-        public IActionResult Index()
+
+        private readonly IWebHostEnvironment _environment;
+        public HomeController(IWebHostEnvironment environment)
+        {
+            _environment = environment;
+        }
+        public IActionResult CreateQRCode()
         {
             return View();
         }
-
-        public IActionResult Privacy()
+        [HttpPost]
+        public IActionResult CreateQRCode(GenerateQRCodeModel generateQRCode)
         {
+            try
+            {
+                GeneratedBarcode barcode = QRCodeWriter.CreateQrCode(generateQRCode.QRCodeText, 200);
+                barcode.AddBarcodeValueTextBelowBarcode();
+                // Styling a QR code and adding annotation text
+                barcode.SetMargins(10);
+                barcode.ChangeBarCodeColor(Color.BlueViolet);
+                string path = Path.Combine(_environment.WebRootPath, "GeneratedQRCode");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                string filePath = Path.Combine(_environment.WebRootPath, "GeneratedQRCode/qrcode.png");
+                barcode.SaveAsPng(filePath);
+                string fileName = Path.GetFileName(filePath);
+                string imageUrl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}" + "/GeneratedQRCode/" + fileName;
+                ViewBag.QrCodeUri = imageUrl;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+
+
+
     }
 }
